@@ -30,8 +30,11 @@ var databaseUrl = config.nuve.dataBaseURL;
  *		_id: ObjectId
  *	};
  *
+ *	users {name: '', password : '', email: '', type: '', [data: {}], _id: ObjectId}
+ *
  */
-var collections = ['rooms', 'tokens', 'services', 'erizoControllers'];
+
+var collections = ['rooms', 'tokens', 'services', 'erizoControllers', 'users'];
 var mongojs = require('mongojs');
 exports.db = mongojs(databaseUrl, collections);
 
