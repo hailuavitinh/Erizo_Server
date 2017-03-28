@@ -1,0 +1,36 @@
+{
+  "name": "licode",
+  "version": "0.1.0",
+  "description": "Open Source Communication Provider",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "async": "^2.1.2",
+    "chai": "^3.5.0",
+    "jshint": "^2.9.3",
+    "mocha": "^3.1.2",
+    "mock-require": "^1.3.0",
+    "sinon": "^1.17.6",
+    "supertest": "^2.0.0",
+    "vows": "0.6.x",
+    "winston": "~0.7.2"
+  },
+  "contributors": [
+    {
+      "name": "Alvaro Alonso",
+      "email": "aalonsog@dit.upm.es"
+    },
+    {
+      "name": "Pedro Rodriguez",
+      "email": "prodriguez@dit.upm.es"
+    },
+    {
+      "name": "Javier Cerviño",
+      "email": "jcervino@dit.upm.es"
+    }
+  ],
+  "scripts": {
+    "test": " ./node_modules/mocha/bin/mocha nuve/nuveAPI/test/* erizo_controller/test/*",
+    "lint": "./node_modules/jshint/bin/jshint erizo_controller/ nuve/ extras/basic_example/ spine/"
+  }
+}
