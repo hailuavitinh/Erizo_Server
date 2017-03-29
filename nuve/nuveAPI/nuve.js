@@ -16,7 +16,7 @@ var servicesResource = require('./resource/servicesResource');
 var serviceResource = require('./resource/serviceResource');
 var usersResource = require('./resource/usersResource');
 var userResource = require('./resource/userResource');
-var fUserResource = require('./resource/FUserResource');
+var fUserResource = require('./resource/FUsersResource');
 
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
