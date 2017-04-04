@@ -1,4 +1,3 @@
-/*global exports, require*/
 'use strict';
 var serviceRegistry = require('./../mdb/serviceRegistry');
 var cloudHandler = require('../cloudHandler');

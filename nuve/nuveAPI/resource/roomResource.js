@@ -65,9 +65,18 @@ exports.updateRoom = function (req, res) {
             if (options.p2p) {
                 room.p2p = true;
             }
+
             if (options.data) {
                 room.data = options.data;
+                room.isPass = options.data.isPass;
+                room.password = options.data.password;
+                room.user = options.data.user;
             }
+            else {
+                room.isPass = false;
+                room.password = '';
+                room.user = '';
+            }            
 
             roomRegistry.updateRoom(id, room);
 
@@ -82,7 +91,7 @@ exports.updateRoom = function (req, res) {
                 serviceRegistry.updateService(req.service);
                 log.info('message: updateRoom  successful, roomId: ' + id + ', serviceId: ' +
                     req.service._id);
-                res.send('Room Updated');
+                res.send(room);
             }
         }
     });

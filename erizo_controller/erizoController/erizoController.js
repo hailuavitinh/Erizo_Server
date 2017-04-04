@@ -1017,7 +1017,8 @@ exports.getUsersInRoom = function (room, callback) {
 
     for (id in sockets) {
         if (sockets.hasOwnProperty(id)) {
-            users.push(io.sockets.socket(sockets[id]).user);
+            users.push(io.sockets.connected[sockets[id]].user); // thanhdc
+            //users.push(io.to(sockets[id]).emit(type,arg)
         }
     }
 

@@ -62,7 +62,7 @@ exports.createRoom = function (req, res) {
             room.password = '';
             room.user = '';
         }
-        
+
         roomRegistry.addRoom(room, function (result) {
             currentService.rooms.push(result);
             serviceRegistry.updateService(currentService);

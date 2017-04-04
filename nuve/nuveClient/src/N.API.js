@@ -41,8 +41,7 @@ N.API = (function (N) {
     };
 
     updateRoom = function (room, name, callback, callbackError, options, params) {
-        send(callback, callbackError, 'PUT', {name: name, options: options},
-             'rooms/' + room, params);
+        send(callback, callbackError, 'PUT', {name: name, options: options}, 'rooms/' + room, params);
     };
 
     patchRoom = function (room, name, callback, callbackError, options, params) {
