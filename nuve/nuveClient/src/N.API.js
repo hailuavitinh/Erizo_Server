@@ -53,9 +53,9 @@ N.API = (function (N) {
         send(callback, callbackError, 'DELETE', undefined, 'rooms/' + room, params);
     };
 
-    createToken = function (room, username, role, callback, callbackError, params) {
+    createToken = function (room, username, role, isowner, callback, callbackError, params) {
         send(callback, callbackError, 'POST', undefined, 'rooms/' + room + '/tokens',
-             params, username, role);
+             params, username, role, isowner);
     };
 
     createService = function (name, key, callback, callbackError, params) {

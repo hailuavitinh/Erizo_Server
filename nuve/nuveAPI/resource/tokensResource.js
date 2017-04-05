@@ -47,6 +47,7 @@ var generateToken = function (req, callback) {
     var user = req.user,
         role = req.role,
         currentRoom = req.room,
+        isowner = req.isowner,
         currentService = req.service,
         r,
         tr,
@@ -62,6 +63,7 @@ var generateToken = function (req, callback) {
     token.userName = user;
     token.room = currentRoom._id;
     token.role = role;
+    token.isowner = isowner;
     token.service = currentService._id;
     token.creationDate = new Date();
 

@@ -100,7 +100,7 @@ exports.removeUser = function (id) {
  var login = exports.login = function (email, pass, callback) {
  	db.users.findOne({email: email, password: pass}, function (err, user) {
         if (user === undefined) {
-            callback({ OK: false, Value: 'Not exit' });
+             callback({ OK: false, Value: 'Not exit' });
         }
         if (callback !== undefined) {
             callback({ OK: true, Value: user });
