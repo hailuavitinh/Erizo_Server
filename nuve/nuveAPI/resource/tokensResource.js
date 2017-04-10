@@ -31,7 +31,8 @@ var getTokenString = function (id, token) {
             tokenId: id,
             host: token.host,
             secure: token.secure,
-            signature: signed
+            signature: signed,
+            isowner:token.isowner
         },
         tokenS = (new Buffer(JSON.stringify(tokenJ))).toString('base64');
 
