@@ -178,7 +178,8 @@ var sendMsgToRoom = function (room, type, arg) {
                       'clientId: ' + sockets[id] + ', ' +
                       'roomId: ' + room.id + ', ' +
                       logger.objectToLog(type));
-            io.sockets.socket(sockets[id]).emit(type, arg);
+            //io.sockets.socket(sockets[id]).emit(type, arg);
+            io.to(sockets[id]).emit(type, arg);
         }
     }
 };
