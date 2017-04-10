@@ -394,7 +394,7 @@ var listen = function () {
                         } else {
                             rooms[tokenDB.room].sockets.push(socket.id);
                         }
-                        user = {name: tokenDB.userName, role: tokenDB.role};
+                        user = {name: tokenDB.userName, role: tokenDB.role,isowner:tokenDB.isowner};
                         socket.user = user;
                         var permissions = GLOBAL.config.erizoController.roles[tokenDB.role] || [];
                         socket.user.permissions = {};
