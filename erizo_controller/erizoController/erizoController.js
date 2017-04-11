@@ -1020,8 +1020,9 @@ var listen = function () {
                 }
             }// end for loop
             if(isOwner == true){
-                console.log("------IDOwner-------",idOwner);
+                console.log("------IDOwner-------");
                 socket.to(idOwner).emit("onDataStream",{message:"knockRoom",username:data.username,socket:socket});
+                console.log("------------------Socket send OK---------------");
                 callback(true);
             } else {
                 callback(false);
