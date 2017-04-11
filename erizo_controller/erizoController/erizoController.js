@@ -1007,31 +1007,29 @@ var listen = function () {
                 callback(false);
                 return;
             }
-            var sockets,idOwner,id;
+            var sockets,idOwner,id,sockerOwner;
             var isOwner = false;
             sockets = rooms[data.room].sockets;
             for(id in sockets){
+                console.log("---Show collections socket:",id);
                 if(sockets.hasOwnProperty(id)){
                     if(io.sockets.connected[sockets[id]].user.isowner === true){
-                        //idOwner = sockets[id];
-                        idOwner = id;
+                        console.log("----------socket user owner:",io.sockets.connected[sockets[id]].user);
+                        sockerOwner = io.sockets.connected[sockets[id]].id;
+                        socket.to(sockerOwner).emit("knockRoom",{message:"knockRoom",username:data.username,socket:socket.id});
                         isOwner = true;
+                        callback({resType:true,socketOwner:sockerOwner});
                         break;
                     }
                 }
             }// end for loop
-            if(isOwner == true){
-                console.log("------IDOwner-------",idOwner);
-                socket.to(idOwner).emit("onDataStream",{message:"knockRoom",username:data.username,socket:socket.id});
-                console.log("------------------Socket send OK---------------");
-                callback(true);
-            } else {
-                callback(false);
+            if(isOwner == false){
+                callback({resType:false,socketOwner:idOwner});
             }
         }); // end socket knock
 
         //ThanhDC3: Create socket Allow join Room 
-        socket.on("allowJoinRoom",function(data){
+        socket.on("allowJoinRoom",function(data){   
             console.log("allow Join Room");
             if(data.socket === underfined){
                 return;
