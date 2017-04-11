@@ -1003,7 +1003,7 @@ var listen = function () {
         //ThanhDC3: Create socket knock knoc to Owner 
         socket.on("knock",function(data,callback){
             console.log("-------------Knock---------",data);
-            if(data.room === undefined || data.username === underfined){
+            if(data.room === undefined || data.username === undefined){
                 callback(false);
                 return;
             }
