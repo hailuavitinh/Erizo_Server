@@ -1013,14 +1013,15 @@ var listen = function () {
             for(id in sockets){
                 if(sockets.hasOwnProperty(id)){
                     if(io.sockets.connected[sockets[id]].user.isowner === true){
-                        idOwner = sockets[id];
+                        //idOwner = sockets[id];
+                        idOwner = id;
                         isOwner = true;
                         break;
                     }
                 }
             }// end for loop
             if(isOwner == true){
-                console.log("------IDOwner-------");
+                console.log("------IDOwner-------",idOwner);
                 socket.to(idOwner).emit("onDataStream",{message:"knockRoom",username:data.username,socket:socket});
                 console.log("------------------Socket send OK---------------");
                 callback(true);
