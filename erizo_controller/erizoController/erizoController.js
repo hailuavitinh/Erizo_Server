@@ -1022,7 +1022,7 @@ var listen = function () {
             }// end for loop
             if(isOwner == true){
                 console.log("------IDOwner-------",idOwner);
-                socket.to(idOwner).emit("onDataStream",{message:"knockRoom",username:data.username,socket:socket});
+                socket.to(idOwner).emit("onDataStream",{message:"knockRoom",username:data.username,socket:socket.id});
                 console.log("------------------Socket send OK---------------");
                 callback(true);
             } else {
