@@ -1007,7 +1007,7 @@ var listen = function () {
                 callback(false);
                 return;
             }
-            var sockets,idOwner;
+            var sockets,idOwner,id;
             var isOwner = false;
             sockets = rooms[data.room].sockets;
             for(id in sockets){
