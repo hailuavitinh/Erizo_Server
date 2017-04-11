@@ -48,12 +48,15 @@ var generateToken = function (req, callback) {
     var user = req.user,
         role = req.role,
         currentRoom = req.room,
-        isowner = req.isowner,
+        isowner = req.body.isowner || false,
         currentService = req.service,
         r,
         tr,
         token,
         tokenS;
+
+    console.log(' ==== body: ',req.body);   
+    
 
     if (user === undefined || user === '') {
         callback(undefined);
