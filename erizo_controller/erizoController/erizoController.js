@@ -999,6 +999,44 @@ var listen = function () {
                 });
             }
         });
+
+        //ThanhDC3: Create socket knock knoc to Owner 
+        socket.on("knock",function(data,callback){
+            console.log("-------------Knock---------",data);
+            if(data.room === undefined || data.username === underfined){
+                callback(false);
+                return;
+            }
+            var sockets,idOwner;
+            var isOwner = false;
+            sockets = rooms[data.room].sockets;
+            for(id in sockets){
+                if(sockets.hasOwnProperty(id)){
+                    if(io.sockets.connected[sockets[id]].user.isowner === true){
+                        idOwner = sockets[id];
+                        isOwner = true;
+                        break;
+                    }
+                }
+            }// end for loop
+            if(isOwner == true){
+                console.log("------IDOwner-------",idOwner);
+                socket.to(idOwner).emit("onDataStream",{message:"knockRoom",username:data.username,socket:socket});
+                callback(true);
+            } else {
+                callback(false);
+            }
+        }); // end socket knock
+
+        //ThanhDC3: Create socket Allow join Room 
+        socket.on("allowJoinRoom",function(data){
+            console.log("allow Join Room");
+            if(data.socket === underfined){
+                return;
+            }
+            socket.to(socket).emit("allowJoinRoom",{message:"true"});
+        }) // end socket
+
     });
 
 };
