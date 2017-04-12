@@ -1034,7 +1034,7 @@ var listen = function () {
             if(data.socket === undefined && data.isAllow === undefined){
                 return;
             }
-            socket.to(socket).emit("allowJoinRoom",{message:isAllow});
+            socket.to(data.socket).emit("allowJoinRoom",{message:data.isAllow});
         }) // end socket
 
     });
