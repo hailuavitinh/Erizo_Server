@@ -1030,11 +1030,11 @@ var listen = function () {
 
         //ThanhDC3: Create socket Allow join Room 
         socket.on("allowJoinRoom",function(data){   
-            console.log("allow Join Room");
-            if(data.socket === underfined){
+            console.log("-----allow Join Room -----");
+            if(data.socket === undefined && data.isAllow === undefined){
                 return;
             }
-            socket.to(socket).emit("allowJoinRoom",{message:"true"});
+            socket.to(socket).emit("allowJoinRoom",{message:isAllow});
         }) // end socket
 
     });
