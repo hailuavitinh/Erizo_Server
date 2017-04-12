@@ -1028,12 +1028,13 @@ var listen = function () {
             }
         }); // end socket knock
 
-        //ThanhDC3: Create socket Allow join Room 
+         //ThanhDC3: Create socket Allow join Room 
         socket.on("allowJoinRoom",function(data){   
-            console.log("-----allow Join Room -----");
+            console.log("-----allow Join Room -----",data.socket);
             if(data.socket === undefined && data.isAllow === undefined){
                 return;
             }
+            console.log("----------------Send Socket Allow Join Room:",data.isAllow);
             socket.to(data.socket).emit("allowJoinRoom",{message:data.isAllow});
         }) // end socket
 
