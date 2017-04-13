@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 set -e
 
 SCRIPT=`pwd`/$0
@@ -12,6 +11,7 @@ NVM_CHECK="$PATHNAME"/checkNvm.sh
 
 LIB_DIR=$BUILD_DIR/libdeps
 PREFIX_DIR=$LIB_DIR/build/
+
 
 
 parse_arguments(){
@@ -68,8 +68,9 @@ install_apt_deps(){
   sudo apt-get install -qq python-software-properties -y
   sudo apt-get install -qq software-properties-common -y
   sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+  sudo add-apt-repository ppa:openjdk-r/ppa -y
   sudo apt-get update -y
-  sudo apt-get install -qq git make gcc-5 g++-5 libssl-dev cmake libglib2.0-dev pkg-config libboost-regex-dev libboost-thread-dev libboost-system-dev liblog4cxx10-dev rabbitmq-server mongodb curl libboost-test-dev -y
+  sudo apt-get install -qq git make gcc-5 g++-5 libssl-dev cmake libglib2.0-dev pkg-config libboost-regex-dev libboost-thread-dev libboost-system-dev liblog4cxx10-dev rabbitmq-server mongodb openjdk-7-jre curl libboost-test-dev -y
   sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 60 --slave /usr/bin/g++ g++ /usr/bin/g++-5
 
   sudo chown -R `whoami` ~/.npm ~/tmp/ || true
@@ -150,10 +151,12 @@ install_mediadeps(){
   sudo apt-get -qq install yasm libvpx. libx264.
   if [ -d $LIB_DIR ]; then
     cd $LIB_DIR
-    if [ ! -f ./libav-11.1.tar.gz ]; then
-      curl -O https://www.libav.org/releases/libav-11.1.tar.gz
-      tar -zxvf libav-11.1.tar.gz
-      cd libav-11.1
+    if [ ! -f ./libav-11.8.tar.gz ]; then
+      curl -O https://www.libav.org/releases/libav-11.8.tar.gz
+      tar -zxvf libav-11.8.tar.gz
+      cd libav-11.8
+      echo "Patching libvpxenc.c for the new libvpx"
+      patch libavcodec/libvpxenc.c $ROOT/extras/patches/libvpxenc.patch
       PKG_CONFIG_PATH=${PREFIX_DIR}/lib/pkgconfig ./configure --prefix=$PREFIX_DIR --enable-shared --enable-gpl --enable-libvpx --enable-libx264 --enable-libopus
       make -s V=0
       make install
@@ -171,23 +174,25 @@ install_mediadeps(){
 install_mediadeps_nogpl(){
   install_opus
   sudo apt-get -qq install yasm libvpx.
-  if [ -d $LIB_DIR ]; then
+ if [ -d $LIB_DIR ]; then
     cd $LIB_DIR
-    if [ ! -f ./libav-11.1.tar.gz ]; then
-      curl -O https://www.libav.org/releases/libav-11.1.tar.gz
-      tar -zxvf libav-11.1.tar.gz
-      cd libav-11.1
+   if [ ! -f ./libav-11.8.tar.gz ]; then
+     curl -O https://www.libav.org/releases/libav-11.8.tar.gz
+     tar -zxvf libav-11.8.tar.gz
+      cd libav-11.8
+      echo "Patching libvpxenc.c for the new libvpx"
+      patch libavcodec/libvpxenc.c $ROOT/extras/patches/libvpxenc.patch
       PKG_CONFIG_PATH=${PREFIX_DIR}/lib/pkgconfig ./configure --prefix=$PREFIX_DIR --enable-shared --enable-gpl --enable-libvpx --enable-libopus
       make -s V=0
       make install
-    else
-      echo "libav already installed"
-    fi
+   else
+     echo "libav already installed"
+   fi
     cd $CURRENT_DIR
-  else
-    mkdir -p $LIB_DIR
-    install_mediadeps_nogpl
-  fi
+ else
+   mkdir -p $LIB_DIR
+   install_mediadeps_nogpl
+ fi
 }
 
 install_libsrtp(){
