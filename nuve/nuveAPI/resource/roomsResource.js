@@ -62,6 +62,8 @@ exports.createRoom = function (req, res) {
             room.password = '';
             room.user = '';
         }
+        
+        room.islock = false;
 
         roomRegistry.addRoom(room, function (result) {
             currentService.rooms.push(result);

@@ -55,6 +55,7 @@ app.get('/rooms', roomsResource.represent);
 
 app.get('/rooms/:room', roomResource.represent);
 app.put('/rooms/:room', roomResource.updateRoom);
+app.put('/rooms/setlock/:room', roomResource.updateLockUnlock);
 app.patch('/rooms/:room', roomResource.patchRoom);
 app.delete('/rooms/:room', roomResource.deleteRoom);
 

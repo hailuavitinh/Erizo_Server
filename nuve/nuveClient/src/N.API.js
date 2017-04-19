@@ -44,6 +44,10 @@ N.API = (function (N) {
         send(callback, callbackError, 'PUT', {name: name, options: options}, 'rooms/' + room, params);
     };
 
+    setLockRoom = function (room, islock, callback, callbackError, params) {
+        send(callback, callbackError, 'PUT', {islock: islock}, 'rooms/setlock/' + room, params);
+    };
+
     patchRoom = function (room, name, callback, callbackError, options, params) {
         send(callback, callbackError, 'PATCH', {name: name, options: options},
              'rooms/' + room, params);
@@ -87,7 +91,7 @@ N.API = (function (N) {
              'rooms/' + room + '/users/' + user, params);
     };
 
-    send = function (callback, callbackError, method, body, url, params, username, role) {
+    send = function (callback, callbackError, method, body, url, params, username, role, ) {
         var service, key, timestamp, cnounce, toSign, header, signed, req;
 
         if (params === undefined) {

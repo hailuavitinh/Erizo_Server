@@ -395,6 +395,10 @@ var listen = function () {
                         } else {
                             rooms[tokenDB.room].sockets.push(socket.id);
                         }
+                        //dat
+                        console.log('  >>>>>>>>>>>> Rooms on soket',rooms);
+
+
                         user = {name: tokenDB.userName, role: tokenDB.role,isowner:tokenDB.isowner};
                         socket.user = user;
                         var permissions = GLOBAL.config.erizoController.roles[tokenDB.role] || [];
@@ -1009,6 +1013,8 @@ var listen = function () {
             }
             var sockets,idOwner,id,sockerOwner;
             var isOwner = false;
+
+            console.log(' >>>>>>>>>>>> Room knock',rooms);
             sockets = rooms[data.room].sockets;
             for(id in sockets){
                 console.log("---Show collections socket:",id);
@@ -1035,7 +1041,19 @@ var listen = function () {
                 return;
             }
             console.log("----------------Send Socket Allow Join Room:",data.isAllow);
-            socket.to(data.socket).emit("allowJoinRoom",{message:data.isAllow});
+            console.log("----------------Send Socket Allow Join Room socket.room:",socket.room.streams);
+
+            var streamList = [], index;
+            for (index in socket.room.streams) {
+                //if (socket.room.streams.hasOwnProperty(index)) {
+                //    if (socket.room.streams[index].status === PUBLISHER_READY){
+                        streamList.push(socket.room.streams[index].getPublicStream());
+                //    }
+                //}
+            }
+            console.log("----------------Send Socket Allow Join Room socket.room:",streamList);
+
+            socket.to(data.socket).emit("allowJoinRoom",{message:data.isAllow, streams: streamList});
         }) // end socket
 
     });

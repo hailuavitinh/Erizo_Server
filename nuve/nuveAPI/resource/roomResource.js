@@ -71,12 +71,58 @@ exports.updateRoom = function (req, res) {
                 room.isPass = options.data.isPass;
                 room.password = options.data.password;
                 room.user = options.data.user;
+                room.islock = options.data.islock;
             }
             else {
                 room.isPass = false;
                 room.password = '';
                 room.user = '';
+                room.islock = false;
             }            
+
+            roomRegistry.updateRoom(id, room);
+
+            for (i = 0; i < array.length; i += 1) {
+                if (array[i]._id === currentRoom._id) {
+                    index = i;
+                }
+            }
+            if (index !== -1) {
+
+                req.service.rooms[index] = room;
+                serviceRegistry.updateService(req.service);
+                log.info('message: updateRoom  successful, roomId: ' + id + ', serviceId: ' +
+                    req.service._id);
+                res.send(room);
+            }
+        }
+    });
+};
+
+/*
+ * Update Room.
+ */
+exports.updateLockUnlock = function (req, res) {
+    doInit(req, function (currentRoom) {
+        if (req.service === undefined) {
+            res.status(401).send('Client unathorized');
+        } else if (currentRoom === undefined) {
+            log.info('message: updateRoom - room does not exist + roomId: ' + req.params.room);
+            res.status(404).send('Room does not exist');
+        } else if (req.body.islock === undefined) {
+            log.info('message: updateRoom - Invalid param');
+            res.status(400).send('Invalid param');
+        } else {
+            var id = '',
+                array = req.service.rooms,
+                index = -1,
+                i;
+
+            id += currentRoom._id;
+            var room = currentRoom;
+            console.log(" >>> >>> >>> currentRoom", currentRoom);
+                     
+            room.islock = req.body.islock;
 
             roomRegistry.updateRoom(id, room);
 
